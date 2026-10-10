@@ -1,48 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProjectCard } from '../project-card/project-card';
-import { PROJECTS } from '../../data/projects.data';
 import { Project } from '../../models/project.model';
-import {  signal,computed } from '@angular/core';
+import { PROJECTS } from '../../data/projects.data';
+import { ProjectCard } from '../project-card/project-card';
+import { ProjectService } from '../../../../core/services/project.service';
 
 @Component({
   selector: 'app-project-list',
   imports: [FormsModule, ProjectCard],
   templateUrl: './project-list.html',
-  styleUrl: './project-list.css',
 })
-export class ProjectList {
-projects = signal<Project[]>(PROJECTS);
-searchTerm = signal('');
+export class ProjectList implements OnInit {
+  private projectService = inject(ProjectService);
+
+  projects = signal<Project[]>([]);
+  searchTerm = signal('');
   selectedProject: Project | null = null;
 
-// Après
-filteredProjects = computed(() => {
-  const term = this.searchTerm().trim().toLowerCase();
-  return this.projects().filter((p) => p.name.toLowerCase().includes(term));
-});
+  filteredProjects = computed(() => {
+    const term = this.searchTerm().trim().toLowerCase();
+    return this.projects().filter((p) => p.name.toLowerCase().includes(term));
+  });
+
+  ngOnInit(): void {
+    this.projectService.getProjects().subscribe((projects) => {
+      this.projects.set(projects);
+    });
+  }
 
   onProjectSelected(project: Project): void {
-    console.log(project);
     this.selectedProject = project;
+    console.log(project);
   }
-  // update() : modifie la liste à partir de l'ancienne valeur (ajoute un projet)
-addProject(): void {
-  this.projects.update((list) => [
-    ...list,
-    {
-      id: list.length + 1,
-      name: 'Nouveau projet',
-      description: 'Projet ajouté avec update()',
-      status: 'En attente',
-      tasks: [],
-    },
-  ]);
-}
 
-// set() : remplace toute la liste par une nouvelle valeur (revient aux données de départ)
-resetProjects(): void {
-  this.projects.set(PROJECTS);
-}
-}
+  addProject(): void {
+    this.projects.update((list) => [
+      ...list,
+      { id: list.length + 1, name: 'Nouveau projet', description: 'Ajouté avec update()', status: 'En attente', tasks: [] },
+    ]);
+  }
 
+  resetProjects(): void {
+    this.projects.set(PROJECTS);
+  }
+}
