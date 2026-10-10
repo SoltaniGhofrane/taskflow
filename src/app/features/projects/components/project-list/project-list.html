@@ -12,29 +12,25 @@
     </p>
   }
 
-  @if (filteredProjects.length === 0) {
+  @if (filteredProjects().length === 0) {
     <p class="text-center text-gray-500">Aucun projet trouvé.</p>
   }
 
-@if (filteredProjects().length === 0) {
-  <p class="text-center text-gray-500">Aucun projet trouvé.</p>
-}
-
-<div class="grid gap-4 md:grid-cols-3">
-  @for (project of filteredProjects(); track project.id) {
-    <app-project-card
-      [project]="project"
-      (projectSelected)="onProjectSelected($event)"
-    />
-  }
-</div>
-  
+  <div class="grid gap-4 md:grid-cols-3">
+    @for (project of filteredProjects(); track project.id) {
+      <app-project-card
+        [project]="project"
+        (projectSelected)="onProjectSelected($event)"
+      />
+    }
   </div>
-  <div class="flex gap-2">
-  <button (click)="addProject()" class="bg-green-600 text-white rounded px-3 py-1">
-    Ajouter un projet
-  </button>
-  <button (click)="resetProjects()" class="bg-gray-500 text-white rounded px-3 py-1">
-    Réinitialiser
-  </button>
+
+  <div class="flex justify-center gap-2">
+    <button (click)="addProject()" class="bg-green-600 text-white rounded px-3 py-1">
+      Ajouter un projet
+    </button>
+    <button (click)="resetProjects()" class="bg-gray-500 text-white rounded px-3 py-1">
+      Réinitialiser
+    </button>
+  </div>
 </div>
