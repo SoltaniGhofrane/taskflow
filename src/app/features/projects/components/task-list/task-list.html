@@ -1,0 +1,12 @@
+@if (tasks().length === 0) {
+  <p class="text-gray-500">Aucune tâche.</p>
+} @else {
+  <ul class="space-y-2">
+    @for (task of tasks(); track task.id) {
+      <li class="border-l-4 pl-3 py-1" [class]="borderClass(task.status)">
+        <p class="font-medium">{{ task.title }}</p>
+        <p class="text-sm text-gray-500">{{ task.priority }} - {{ task.status }}</p>
+      </li>
+    }
+  </ul>
+}
