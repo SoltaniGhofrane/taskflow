@@ -2,10 +2,11 @@ import { Component, computed, input } from '@angular/core';
 import { User } from '../../models/user.model';
 import { Project } from '../../../projects/models/project.model';
 import { UserProjectGroup } from '../user-project-group/user-project-group';
+import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-user-card',
-  imports: [UserProjectGroup],
+  imports: [UserProjectGroup, EmptyState],
   templateUrl: './user-card.html',
 })
 export class UserCard {

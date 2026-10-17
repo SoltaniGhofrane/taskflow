@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   imports: [],
@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './empty-state.css',
   templateUrl: './empty-state.html',
 })
-export class EmptyState {}
+export class EmptyState {
+  // Message affiché (valeur par défaut si le parent n'en donne pas)
+  message = input('Aucun résultat trouvé.');
+}

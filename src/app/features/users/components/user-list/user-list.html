@@ -15,8 +15,7 @@
     @for (user of filteredUsers(); track user.id) {
       <app-user-card [user]="user" [projects]="projects()" />
     } @empty {
-      <app-empty-state />
-    }
+<app-empty-state message="Aucun utilisateur ne correspond à la recherche." />    }
   </div>
 
 </div>

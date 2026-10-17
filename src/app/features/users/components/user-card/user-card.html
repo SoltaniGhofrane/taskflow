@@ -35,7 +35,7 @@
     @for (project of myProjects(); track project.id) {
       <app-user-project-group [project]="project" [userId]="user().id" />
     } @empty {
-      <p class="text-gray-400 italic">Aucune tâche assignée</p>
+      <app-empty-state message="Aucune tâche assignée" />
     }
   </div>
 
