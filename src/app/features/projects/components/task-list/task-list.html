@@ -6,6 +6,9 @@
       <li class="border-l-4 pl-3 py-1" [class]="borderClass(task.status)">
         <p class="font-medium">{{ task.title }}</p>
         <p class="text-sm text-gray-500">{{ task.priority }} - {{ task.status }}</p>
+        @if (showAssignee()) {
+          <p class="text-xs text-gray-400">👤 {{ assigneeName(task.assigneeId) }}</p>
+        }
       </li>
     }
   </ul>

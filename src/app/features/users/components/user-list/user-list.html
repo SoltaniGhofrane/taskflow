@@ -1,0 +1,22 @@
+<div class="max-w-5xl mx-auto p-4 space-y-4">
+
+  <!-- Barre de recherche : property binding [value] + event binding (input) -->
+  <input
+    type="text"
+    placeholder="Rechercher un utilisateur (nom, email, rôle)..."
+    class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+    [value]="search()"
+    (input)="onSearch($event)" />
+
+  <p class="text-sm text-gray-500">{{ filteredUsers().length }} utilisateur(s)</p>
+
+  <!-- Liste des cartes -->
+  <div class="grid gap-4 md:grid-cols-2">
+    @for (user of filteredUsers(); track user.id) {
+      <app-user-card [user]="user" [projects]="projects()" />
+    } @empty {
+      <app-empty-state />
+    }
+  </div>
+
+</div>
