@@ -5,7 +5,26 @@
     @for (task of tasks(); track task.id) {
       <li class="border-l-4 pl-3 py-1" [class]="borderClass(task.status)">
         <p class="font-medium">{{ task.title }}</p>
-        <p class="text-sm text-gray-500">{{ task.priority }} - {{ task.status }}</p>
+
+        @if (task.description) {
+          <p class="text-sm text-gray-600">{{ task.description | truncate: 40 }}</p>
+        }
+
+        <p class="text-sm text-gray-500">
+          @switch (task.priority) {
+            @case ('Haute') { ▲ Haute }
+            @case ('Moyenne') { ● Moyenne }
+            @default { ▼ Basse }
+          }
+          - {{ task.status }}
+        </p>
+
+        @if (task.dueDate; as due) {
+          <p class="text-xs text-gray-500">{{ due | date: 'dd/MM/yyyy' }} · {{ due | deadline }}</p>
+        } @else {
+          <p class="text-xs text-gray-400 italic">Aucune échéance</p>
+        }
+
         @if (showAssignee()) {
           <p class="text-xs text-gray-400">👤 {{ assigneeName(task.assigneeId) }}</p>
         }

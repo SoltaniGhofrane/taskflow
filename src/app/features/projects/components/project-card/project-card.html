@@ -1,11 +1,39 @@
 <div class="bg-white shadow rounded p-4 space-y-3">
-  <h2 class="text-lg font-bold">{{ project().name }}</h2>
+  <h2 class="text-lg font-bold">{{ project().name | uppercase }}</h2>
   <p class="text-gray-600">{{ project().description }}</p>
   <p class="text-sm font-medium" [class]="statusClass(project().status)">
     Statut : {{ project().status }}
   </p>
 
-  <app-task-list [tasks]="project().tasks" />
+  <div class="text-sm text-gray-700 space-y-1">
+    <p>Début : {{ project().startDate | date: 'dd MMMM yyyy' }}</p>
+    <p>Budget : {{ project().budget | currency: 'TND' : 'code' : '1.2-2' }}</p>
+
+    @if (project().tasks.length > 0) {
+      <p>Réalisation : {{ completionRate() | percent: '1.0-0' }}</p>
+      <p>Coût moyen par tâche : {{ averageCost() | number: '1.0-0' }} TND</p>
+    }
+  </div>
+
+  <p class="text-sm font-semibold">
+    @if (project().tasks.length === 0) {
+      Aucune tâche pour le moment
+    } @else if (completionRate() === 1) {
+      Projet terminé
+    } @else if (completionRate() > 0) {
+      En progression
+    } @else {
+      Pas encore démarré
+    }
+  </p>
+
+  <div class="flex flex-wrap gap-2 text-xs">
+    @for (item of priorityCounts() | keyvalue; track item.key) {
+      <span class="bg-gray-100 rounded-full px-2 py-0.5">{{ item.key }} : {{ item.value }}</span>
+    }
+  </div>
+
+  <app-task-list [tasks]="project().tasks | slice: 0 : 3" />
 
   <button
     type="button"

@@ -50,6 +50,6 @@ export const PROJECTS: Project[] = [
   {
     id: 4, name: 'Documentation technique', description: 'Guide développeur.',
     status: 'En attente', startDate: '2026-11-01', budget: 4500,
-    tasks: [], // projet sans tâche (test division par zéro)
+    tasks: [], 
   },
 ];

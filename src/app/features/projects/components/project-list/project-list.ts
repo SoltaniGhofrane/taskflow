@@ -36,7 +36,15 @@ export class ProjectList implements OnInit {
   addProject(): void {
     this.projects.update((list) => [
       ...list,
-      { id: list.length + 1, name: 'Nouveau projet', description: 'Ajouté avec update()', status: 'En attente', tasks: [] },
+      {
+        id: list.length + 1,
+        name: 'Nouveau projet',
+        description: 'Ajouté avec update()',
+        status: 'En attente',
+        startDate: new Date().toISOString().slice(0, 10), // NOUVEAU : date du jour 'YYYY-MM-DD'
+        budget: 0,                                         // NOUVEAU : budget par défaut
+        tasks: [],
+      },
     ]);
   }
 
