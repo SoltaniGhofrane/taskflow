@@ -3,7 +3,14 @@
 } @else {
   <ul class="space-y-2">
     @for (task of tasks(); track task.id) {
-      <li class="border-l-4 pl-3 py-1" [class]="borderClass(task.status)">
+      <li
+      appHighlight
+      class="border-l-4 pl-3 py-1 rounded-r transition-colors"
+        [ngClass]="{
+          'border-green-500': task.status === 'Terminé',
+          'border-blue-500': task.status === 'En cours',
+          'border-gray-400': task.status === 'En attente'
+        }">
         <p class="font-medium">{{ task.title }}</p>
 
         @if (task.description) {

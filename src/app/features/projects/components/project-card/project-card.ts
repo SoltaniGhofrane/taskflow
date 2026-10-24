@@ -4,6 +4,7 @@ import {
   DatePipe,
   DecimalPipe,
   KeyValuePipe,
+  NgStyle,
   PercentPipe,
   SlicePipe,
   UpperCasePipe,
@@ -15,6 +16,7 @@ import { TaskList } from '../task-list/task-list';
   selector: 'app-project-card',
   imports: [
     TaskList,
+    NgStyle,
     UpperCasePipe,
     DatePipe,
     CurrencyPipe,
@@ -49,6 +51,18 @@ export class ProjectCard {
     }
     return counts;
   });
+
+  /**
+   * Retour : string
+   * Paramètres : aucun
+   * Fonction : retourne la couleur de la barre de progression selon le taux de réalisation (rouge sous 34 %, orange jusqu'à 66 %, vert au-delà)
+   */
+  get barColor(): string {
+    const rate = this.completionRate() * 100;
+    if (rate < 34) return '#ef4444';
+    if (rate <= 66) return '#f59e0b';
+    return '#22c55e';
+  }
 
   /**
    * Retour : void
