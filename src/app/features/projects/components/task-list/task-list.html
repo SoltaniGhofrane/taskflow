@@ -4,8 +4,11 @@
   <ul class="space-y-2">
     @for (task of tasks(); track task.id) {
       <li
-      appHighlight
-      class="border-l-4 pl-3 py-1 rounded-r transition-colors"
+        appHighlight
+        appOverdue
+        [dueDate]="task.dueDate"
+        [done]="task.status === 'Terminé'"
+        class="border-l-4 pl-3 py-1 rounded-r transition-colors"
         [ngClass]="{
           'border-green-500': task.status === 'Terminé',
           'border-blue-500': task.status === 'En cours',
@@ -14,7 +17,9 @@
         <p class="font-medium">{{ task.title }}</p>
 
         @if (task.description) {
-          <p class="text-sm text-gray-600">{{ task.description | truncate: 40 }}</p>
+          <p class="text-sm text-gray-600 cursor-help" [appTooltip]="task.description">
+            {{ task.description | truncate: 40 }}
+          </p>
         }
 
         <p class="text-sm text-gray-500">

@@ -26,7 +26,6 @@ import { TaskList } from '../task-list/task-list';
     KeyValuePipe,
   ],
   templateUrl: './project-card.html',
-  styleUrl: './project-card.css',
 })
 export class ProjectCard {
   project = input.required<Project>();
